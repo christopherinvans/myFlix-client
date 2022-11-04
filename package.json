@@ -23,5 +23,8 @@
   },
   "homepage": "https://github.com/christopherinvans/myFlix-client#readme",
   "entry": "src/index.html",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
+  }
 }
