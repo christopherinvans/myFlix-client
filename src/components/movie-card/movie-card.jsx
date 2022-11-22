@@ -1,21 +1,24 @@
-import React from "react";
-// import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import './movie-card.scss';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onMovieClick } = this.props; // movie is the name of the prop i.e movie without curly brackets
+    const { movie, onMovieClick } = this.props;
+
     return (
-      <div
-        className="movie-card"
-        onClick={() => {
-          onMovieClick(movie);
-        }}
-      >
-        {movie.Title}
-      </div>
+      <div onClick={() => onMovieClick(movie)} className="movie-card">{movie.Title}</div>
     );
   }
 }
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string
+  }).isRequired,
+  onMovieClick: PropTypes.func.isRequired
+};
 
 // MovieCard.propTypes = {
 //   movie: PropTypes.shape({
