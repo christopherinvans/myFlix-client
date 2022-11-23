@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './main-view.scss';
 
@@ -52,12 +54,23 @@ class MainView extends React.Component {
     
         return (
           <div className="main-view">
-            {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}
             {selectedMovie
-              ? <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
-              : movies.map(movie => (
-                <MovieCard key={movie._id} movie={movie} onMovieClick={(newSelectedMovie) => { this.setSelectedMovie(newSelectedMovie) }}/>
-             ))
+              ? (
+                <Row className="justify-content-md-center">
+                  <Col md={8}>
+                    <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
+                  </Col>
+                </Row>
+              )
+              : (
+                <Row className="justify-content-md-center">
+                  {movies.map(movie => (
+                    <Col md={3}>
+                      <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
+                    </Col>
+                  ))}
+                </Row>
+              )
             }
           </div>
         );
