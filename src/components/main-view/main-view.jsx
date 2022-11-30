@@ -44,7 +44,7 @@ class MainView extends React.Component {
         });
       }
 
-      toRegister(registered) {
+      registration(registered) {
         this.setState({
           registered,
         });
@@ -53,13 +53,14 @@ class MainView extends React.Component {
       render() {
         const { movies, selectedMovie, user, registered } = this.state;
       
-        if (!registered) return <RegistrationView />;
+        if (!registered) return (<RegistrationView registration={(register) => this.registration(register)}/>);
+
       
         if (!user)
             return (
               <LoginView
                 onLoggedIn={(user) => this.onLoggedIn(user)}
-                toRegister={(registered) => this.toRegister(registered)}
+                registration={(registered) => this.registration(registered)}
               />
             );
       

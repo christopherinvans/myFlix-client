@@ -14,7 +14,8 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username, password, email, birthday);
-    props.Registration(username);
+    console.log(props);
+    props.registration(username);
   };
 
   return (
@@ -73,11 +74,7 @@ export function RegistrationView(props) {
                     onClick={handleSubmit}
                   >Register
                   </Button>
-                  <Button 
-                  className="back-button mt-2"
-                  variant="secondary"
-                  type="submit"
-                  onClick={() => { onBackClick(null); }}>Back to the Login Page</Button>
+               
                 </Form>
               </Card.Body>
             </Card>
@@ -88,4 +85,15 @@ export function RegistrationView(props) {
   );
 }
 
-RegistrationView.propTypes = {};
+RegistrationView.propTypes = {
+  // movie: PropTypes.shape({
+  //   // shape({..}) means that its an object
+  //   Title: PropTypes.string.isRequired,
+  //   Description: PropTypes.string.isRequired,
+  //   ImagePath: PropTypes.string.isRequired,
+  //   Genre: PropTypes.shape({
+  //     Name: PropTypes.string.isRequired,
+  //   }),
+  // }).isRequired,
+  registration: PropTypes.func.isRequired,
+};
