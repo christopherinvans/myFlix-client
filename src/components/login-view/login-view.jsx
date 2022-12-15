@@ -25,7 +25,11 @@ export function LoginView(props) {
         console.log('no such user')
       });
     };
-  
+
+    const handleRegisterClick = (e) => {
+      e.preventDefault();
+      props.toRegister();
+    };
   
     return (
       <Form>
@@ -41,7 +45,9 @@ export function LoginView(props) {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button>Register</Button>
+        <Button className="register-button mt-2" variant="secondary" type="submit" onClick={handleRegisterClick}>
+        Register
+      </Button>
       </Form>
     );
   }

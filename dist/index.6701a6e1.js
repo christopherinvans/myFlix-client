@@ -31194,10 +31194,14 @@ function LoginView(props) {
             console.log('no such user');
         });
     };
+    const handleRegisterClick = (e)=>{
+        e.preventDefault();
+        props.toRegister();
+    };
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_formDefault.default, {
         __source: {
             fileName: "src/components/login-view/login-view.jsx",
-            lineNumber: 31
+            lineNumber: 35
         },
         __self: this,
         children: [
@@ -31205,14 +31209,14 @@ function LoginView(props) {
                 controlId: "formUsername",
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 32
+                    lineNumber: 36
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Label, {
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 33
+                            lineNumber: 37
                         },
                         __self: this,
                         children: "Username:"
@@ -31223,7 +31227,7 @@ function LoginView(props) {
                         ,
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 34
+                            lineNumber: 38
                         },
                         __self: this
                     })
@@ -31233,14 +31237,14 @@ function LoginView(props) {
                 controlId: "formPassword",
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 37
+                    lineNumber: 41
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Label, {
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 38
+                            lineNumber: 42
                         },
                         __self: this,
                         children: "Password:"
@@ -31251,7 +31255,7 @@ function LoginView(props) {
                         ,
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 39
+                            lineNumber: 43
                         },
                         __self: this
                     })
@@ -31263,15 +31267,19 @@ function LoginView(props) {
                 onClick: handleSubmit,
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 41
+                    lineNumber: 45
                 },
                 __self: this,
                 children: "Submit"
             }),
             /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                className: "register-button mt-2",
+                variant: "secondary",
+                type: "submit",
+                onClick: handleRegisterClick,
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 44
+                    lineNumber: 48
                 },
                 __self: this,
                 children: "Register"
