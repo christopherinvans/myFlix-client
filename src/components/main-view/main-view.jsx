@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -72,6 +72,12 @@ class MainView extends React.Component {
 
       render() {
         const { movies, selectedMovie, user, registered } = this.state;
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const storedToken = localStorage.getItem("token");
+        const [user, setUser] = useState(storedUser? storedUser : null);
+        const [token, setToken] = useState(storedToken? storedToken : null);
+        const [movies, setMovies] = useState([]);
+        const [selectedMovie, setSelectedMovie] = useState(null);
       
         if (!registered) return (<RegistrationView registration={(register) => this.registration(register)}/>);
 
@@ -83,6 +89,20 @@ class MainView extends React.Component {
                 registration={(registered) => this.registration(registered)}
               />
             );
+
+        useEffect(() => {
+              if (!token) {
+                return;
+              }
+          
+              fetch("https://enigmatic-river-99618.herokuapp.com/movies", {
+                headers: { Authorization: `Bearer ${token}` }
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log(data);
+                });
+            }, [token]);
       
         if (movies.length === 0) return <div className="main-view" />;
 
@@ -105,6 +125,6 @@ class MainView extends React.Component {
       }
     
     }
-
+<button onClick={() => { setUser(null); }}>Logout</button>
 
 export default MainView;

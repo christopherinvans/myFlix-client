@@ -980,7 +980,7 @@ _reactDomDefault.default.render(/*#__PURE__*/ _reactDefault.default.createElemen
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"6TuXu","react-dom":"gkWJK","./components/main-view/main-view":"2zHas","./index.scss":"jUTZ8","@parcel/transformer-js/src/esmodule-helpers.js":"fnRRq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5ACXe","react/jsx-runtime":"8xIwr","react-bootstrap/Container":"2PRIq"}],"6TuXu":[function(require,module,exports) {
+},{"react":"6TuXu","react-dom":"gkWJK","./components/main-view/main-view":"2zHas","./index.scss":"jUTZ8","@parcel/transformer-js/src/esmodule-helpers.js":"fnRRq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"5ACXe","react-bootstrap/Container":"2PRIq","react/jsx-runtime":"8xIwr"}],"6TuXu":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react.development.js');
 
@@ -24467,12 +24467,18 @@ class MainView extends _reactDefault.default.Component {
     }
     render() {
         const { movies , selectedMovie , user , registered  } = this.state;
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const storedToken = localStorage.getItem("token");
+        const [user, setUser] = _react.useState(storedUser ? storedUser : null);
+        const [token, setToken] = _react.useState(storedToken ? storedToken : null);
+        const [movies, setMovies] = _react.useState([]);
+        const [selectedMovie, setSelectedMovie] = _react.useState(null);
         if (!registered) return(/*#__PURE__*/ _jsxRuntime.jsx(_registrationView.RegistrationView, {
             registration: (register)=>this.registration(register)
             ,
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 76
+                lineNumber: 82
             },
             __self: this
         }));
@@ -24483,15 +24489,28 @@ class MainView extends _reactDefault.default.Component {
             ,
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 81
+                lineNumber: 87
             },
             __self: this
         }));
+        _react.useEffect(()=>{
+            if (!token) return;
+            fetch("https://enigmatic-river-99618.herokuapp.com/movies", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then((response)=>response.json()
+            ).then((data)=>{
+                console.log(data);
+            });
+        }, [
+            token
+        ]);
         if (movies.length === 0) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
             className: "main-view",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 87
+                lineNumber: 107
             },
             __self: this
         }));
@@ -24499,14 +24518,14 @@ class MainView extends _reactDefault.default.Component {
             className: "main-view justify-content-md-center",
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 90
+                lineNumber: 110
             },
             __self: this,
             children: selectedMovie ? /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                 md: 8,
                 __source: {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 93
+                    lineNumber: 113
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_movieView.MovieView, {
@@ -24516,7 +24535,7 @@ class MainView extends _reactDefault.default.Component {
                     },
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 94
+                        lineNumber: 114
                     },
                     __self: this
                 })
@@ -24524,7 +24543,7 @@ class MainView extends _reactDefault.default.Component {
                     md: 3,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 98
+                        lineNumber: 118
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
@@ -24534,7 +24553,7 @@ class MainView extends _reactDefault.default.Component {
                         },
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 99
+                            lineNumber: 119
                         },
                         __self: this
                     }, movie._id)
@@ -24543,6 +24562,17 @@ class MainView extends _reactDefault.default.Component {
         }));
     }
 }
+/*#__PURE__*/ _jsxRuntime.jsx("button", {
+    onClick: ()=>{
+        setUser(null);
+    },
+    __source: {
+        fileName: "src/components/main-view/main-view.jsx",
+        lineNumber: 128
+    },
+    __self: undefined,
+    children: "Logout"
+});
 exports.default = MainView;
 
   $parcel$ReactRefreshHelpers$35bf.postlude(module);
@@ -31184,14 +31214,22 @@ function LoginView(props) {
     const [password, setPassword] = _react.useState('');
     const handleSubmit = (e)=>{
         e.preventDefault();
-        /* Send a request to the server for authentication */ _axiosDefault.default.post('https://enigmatic-river-99618.herokuapp.com/login', {
-            Username: username,
-            Password: password
-        }).then((response)=>{
-            const data = response.data;
-            props.onLoggedIn(data);
+        /* Send a request to the server for authentication */ fetch('https://enigmatic-river-99618.herokuapp.com/login', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then((response)=>response.json()
+        ).then((data)=>{
+            console.log("Login response: ", data);
+            if (data.user) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("token", data.token);
+                onLoggedIn(data.user, data.token);
+            } else alert("No such user");
         }).catch((e1)=>{
-            console.log('no such user');
+            alert("Something went wrong");
         });
     };
     const handleRegisterClick = (e)=>{
@@ -31201,7 +31239,7 @@ function LoginView(props) {
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_formDefault.default, {
         __source: {
             fileName: "src/components/login-view/login-view.jsx",
-            lineNumber: 35
+            lineNumber: 44
         },
         __self: this,
         children: [
@@ -31209,25 +31247,27 @@ function LoginView(props) {
                 controlId: "formUsername",
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 36
+                    lineNumber: 45
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Label, {
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 37
+                            lineNumber: 46
                         },
                         __self: this,
                         children: "Username:"
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Control, {
                         type: "text",
+                        value: username,
                         onChange: (e)=>setUsername(e.target.value)
                         ,
+                        required: true,
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 38
+                            lineNumber: 47
                         },
                         __self: this
                     })
@@ -31237,25 +31277,27 @@ function LoginView(props) {
                 controlId: "formPassword",
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 41
+                    lineNumber: 50
                 },
                 __self: this,
                 children: [
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Label, {
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 42
+                            lineNumber: 51
                         },
                         __self: this,
                         children: "Password:"
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Control, {
                         type: "password",
+                        value: password,
                         onChange: (e)=>setPassword(e.target.value)
                         ,
+                        required: true,
                         __source: {
                             fileName: "src/components/login-view/login-view.jsx",
-                            lineNumber: 43
+                            lineNumber: 52
                         },
                         __self: this
                     })
@@ -31267,7 +31309,7 @@ function LoginView(props) {
                 onClick: handleSubmit,
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 45
+                    lineNumber: 54
                 },
                 __self: this,
                 children: "Submit"
@@ -31279,7 +31321,7 @@ function LoginView(props) {
                 onClick: handleRegisterClick,
                 __source: {
                     fileName: "src/components/login-view/login-view.jsx",
-                    lineNumber: 48
+                    lineNumber: 57
                 },
                 __self: this,
                 children: "Register"
