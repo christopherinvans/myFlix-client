@@ -16,7 +16,7 @@ class MainView extends React.Component {
         super();
         this.state = {
           movies: [],
-          selectedMovie: null
+          selectedMovie: null,
         }
       }
 
@@ -71,7 +71,7 @@ class MainView extends React.Component {
       }
 
       render() {
-        const { movies, selectedMovie, user, registered } = this.state;
+        // const { movies, selectedMovie, registered } = this.state;
         const storedUser = JSON.parse(localStorage.getItem("user"));
         const storedToken = localStorage.getItem("token");
         const [user, setUser] = useState(storedUser? storedUser : null);
@@ -82,13 +82,17 @@ class MainView extends React.Component {
         if (!registered) return (<RegistrationView registration={(register) => this.registration(register)}/>);
 
       
-        if (!user)
-            return (
-              <LoginView
-                onLoggedIn={(user) => this.onLoggedIn(user)}
-                registration={(registered) => this.registration(registered)}
-              />
-            );
+        if (!user) {
+          return (
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+          );
+        }
+      
 
         useEffect(() => {
               if (!token) {
@@ -99,8 +103,9 @@ class MainView extends React.Component {
                 headers: { Authorization: `Bearer ${token}` }
               })
                 .then((response) => response.json())
-                .then((data) => {
-                  console.log(data);
+                .then((movies) => {
+                  console.log(movies);
+                  setMovies(movies);
                 });
             }, [token]);
       
@@ -125,6 +130,6 @@ class MainView extends React.Component {
       }
     
     }
-<button onClick={() => { setUser(null); }}>Logout</button>
+{/* <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button> */}
 
 export default MainView;

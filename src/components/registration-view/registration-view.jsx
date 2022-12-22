@@ -11,11 +11,30 @@ export function RegistrationView(props) {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(username, password, email, birthday);
-    console.log(props);
-    props.registration(username);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    };
+
+    fetch("https://enigmatic-river-99618.herokuapp.com/users", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      if (response.ok) {
+        alert("Signup successful");
+        window.location.reload();
+      } else {
+        alert("Signup failed");
+      }
+    });
   };
 
   return (
@@ -35,6 +54,7 @@ export function RegistrationView(props) {
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      minLength="3"
                     />
                   </Form.Group>
 
