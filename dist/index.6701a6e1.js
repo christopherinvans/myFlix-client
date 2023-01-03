@@ -24447,7 +24447,7 @@ class MainView extends _reactDefault.default.Component {
         }
     }
     getMovies(token) {
-        _axiosDefault.default.get("https://myflix-firstmovieapp.herokuapp.com/movies", {
+        _axiosDefault.default.get("https://enigmatic-river-99618.herokuapp.com/movies", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -24494,7 +24494,7 @@ class MainView extends _reactDefault.default.Component {
                         movieId
                     ]
                 });
-                _axiosDefault.default.put(`https://myflix-firstmovieapp.herokuapp.com/users/${username}/movies/${movieId}`, {
+                _axiosDefault.default.put(`https://enigmatic-river-99618.herokuapp.com/users/${username}/movies/${movieId}`, {
                 }, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
@@ -24511,7 +24511,7 @@ class MainView extends _reactDefault.default.Component {
                     favoriteMovies: favoriteMovies.filter((id)=>id !== movieId
                     )
                 });
-                _axiosDefault.default.delete(`https://myflix-firstmovieapp.herokuapp.com/users/${username}/favorites/${movieId}`, {
+                _axiosDefault.default.delete(`https://enigmatic-river-99618.herokuapp.com/users/${username}/favorites/${movieId}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }
@@ -32873,7 +32873,7 @@ function RegistrationView(props) {
         //console.log(username, password, email, birthday);
         // props.Registration(username);
         const isReq = validate();
-        if (isReq) _axiosDefault.default.post("https://myflix-firstmovieapp.herokuapp.com/users", {
+        if (isReq) _axiosDefault.default.post("https://enigmatic-river-99618.herokuapp.com/users", {
             Username: username,
             Password: password,
             Email: email,

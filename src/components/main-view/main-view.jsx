@@ -43,7 +43,7 @@ export class MainView extends React.Component {
 
   getMovies(token) {
     axios
-      .get("https://myflix-firstmovieapp.herokuapp.com/movies", {
+      .get("https://enigmatic-river-99618.herokuapp.com/movies", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -94,7 +94,7 @@ handleFavorite = (movieId, action) => {
       this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
       axios
         .put(
-          `https://myflix-firstmovieapp.herokuapp.com/users/${username}/movies/${movieId}`,
+          `https://enigmatic-river-99618.herokuapp.com/users/${username}/movies/${movieId}`,
           {},
           {
             headers: { Authorization: `Bearer ${accessToken}` },
@@ -115,7 +115,7 @@ handleFavorite = (movieId, action) => {
       });
       axios
         .delete(
-          `https://myflix-firstmovieapp.herokuapp.com/users/${username}/favorites/${movieId}`,
+          `https://enigmatic-river-99618.herokuapp.com/users/${username}/favorites/${movieId}`,
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
