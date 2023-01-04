@@ -84,6 +84,12 @@ toRegister(registered) {
   });
 }
 
+setSelectedMovie(movie) {
+  this.setState({
+    selectedMovie: movie
+  });
+}
+
 handleFavorite = (movieId, action) => {
   const { user, favoriteMovies } = this.state;
   const accessToken = localStorage.getItem("token");
@@ -130,7 +136,7 @@ handleFavorite = (movieId, action) => {
   }
 };
 render() {
-  const { movies, user, favoriteMovies } = this.state;
+  const { movies, user, favoriteMovies, selectedMovie } = this.state;
   return (
     <BrowserRouter>
     {/* <Routes> */}
@@ -147,11 +153,22 @@ render() {
                 </Col>
               );
             if (movies.length === 0) return <div className="main-view" />;
-            return movies.map((m) => (
-              <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
-              </Col>
-            ));
+            return (
+              <Row className="main-view justify-content-md-center">
+                {selectedMovie
+                  ? (
+                    <Col md={8}>
+                      <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
+                    </Col>
+                  )
+                  : movies.map(movie => (
+                    <Col md={3}>
+                      <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
+                    </Col>
+                  ))
+                }
+              </Row>
+            );
           }}
         />
         <Route
