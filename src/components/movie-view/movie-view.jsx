@@ -1,4 +1,5 @@
 import React from "react";
+import { Row, Col, Button, Image } from "react-bootstrap";
 
 import './movie-view.scss';
 
@@ -37,13 +38,25 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Director.Bio}</span>
         </div>
 
-        <button
-          onClick={() => {
-            onBackClick(null);
-          }}
-        >
-          Back
-        </button>
+        <Button
+            className="button-movie-view-add-favorite"
+            variant="outline-warning"
+            size="sm"
+            type="button"
+            onClick={() => addFavorite(movie._id)}
+          >
+            Add to favorites
+          </Button>
+
+        <Button
+              className="back-button mt-2"
+              variant="secondary"
+              onClick={() => {
+                onBackClick();
+              }}
+            >
+              Back
+            </Button>
       </div>
     );
   }

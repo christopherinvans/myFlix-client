@@ -84,11 +84,11 @@ toRegister(registered) {
   });
 }
 
-setSelectedMovie(movie) {
-  this.setState({
-    selectedMovie: movie
-  });
-}
+// setSelectedMovie(movie) {
+//   this.setState({
+//     selectedMovie: movie
+//   });
+// }
 
 addFavorite(movieId) {
   let { user, favoriteMovies } = this.props;
@@ -144,7 +144,7 @@ render() {
   return (
     <BrowserRouter>
     {/* <Routes> */}
-      {/* <Navbar user={user} /> */}
+      <Navbar user={user} />
       <Row className="main-view justify-content-md-center mt-3">
         <Route
           exact
@@ -157,21 +157,21 @@ render() {
                 </Col>
               );
             if (movies.length === 0) return <div className="main-view" />;
+            return movies.map((m) => (
+              <Col md={3} key={m._id}>
+                <MovieCard movie={m} />
+              </Col>
+            ));
+          }}
+        />
+        <Route
+          path="/register"
+          render={() => {
+            if (user) return <Redirect to="/" />;
             return (
-              <Row className="main-view justify-content-md-center">
-                {selectedMovie
-                  ? (
-                    <Col md={8}>
-                      <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }} />
-                    </Col>
-                  )
-                  : movies.map(movie => (
-                    <Col md={3}>
-                      <MovieCard key={movie._id} movie={movie} onMovieClick={newSelectedMovie => { this.setSelectedMovie(newSelectedMovie); }}/>
-                    </Col>
-                  ))
-                }
-              </Row>
+              <Col>
+                <RegistrationView />
+              </Col>
             );
           }}
         />

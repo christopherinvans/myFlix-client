@@ -22,9 +22,9 @@ export function Navbar({ user }) {
     <Navbar
       className="main-nav"
       sticky="top"
-      bg="dark"
+    //   bg="dark"
       expand="lg"
-      variant="dark"
+    //   variant="dark"
     >
       <Container>
         <Navbar.Brand className="navbar-logo" href="/">
