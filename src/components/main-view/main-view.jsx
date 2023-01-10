@@ -11,7 +11,7 @@ import { MovieView } from "../movie-view/movie-view";
 import { Navbar } from "../navbar/navbar";
 // import { DirectorView } from "../director-view/director-view";
 // import { GenreView } from "../genre-view/genre-view";
-import ProfileView from "../profile-view/profile-view";
+import { ProfileView } from "../profile-view/profile-view";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -84,20 +84,15 @@ toRegister(registered) {
   });
 }
 
-// setSelectedMovie(movie) {
-//   this.setState({
-//     selectedMovie: movie
-//   });
-// }
 
-addFavorite(movieId) {
-  let { user, favoriteMovies } = this.props;
+addFavorite=(movieId)=> {
+  let { user, favoriteMovies } = this.state;
   const token = localStorage.getItem('token');
   if (favoriteMovies.some((favId) => favId === movieId)) {
     console.log('Movie already added to favorites!');
   } else {
     if (token !== null && user !== null) {
-      this.props.addFavorite(movieId);
+      this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
       axios
         .post(
           `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
@@ -200,7 +195,7 @@ render() {
                   user={user} 
                   goBack={history.goBack} 
                   favoriteMovies={favoriteMovies || []} 
-                  handleFavorite={this.handleFavorite} 
+                  addFavorite={this.addFavorite} 
                   onBackClick={() => history.goBack()} 
                   movies={movies} />
                 </Col>
@@ -239,7 +234,7 @@ render() {
                 <MovieView
                   movie={movies.find((m) => m._id === match.params.movieId)}
                   onBackClick={() => history.goBack()}
-                  handleFavorite={this.handleFavorite}
+                 addFavorite={this.addFavorite}
                 />
               </Col>
             );

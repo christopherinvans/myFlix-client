@@ -4,13 +4,42 @@ import { Row, Col, Button, Image } from "react-bootstrap";
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
+  // addFavorite(movieId) {
+  //   let { user, favoriteMovies } = this.props;
+  //   console.log(this.props);
+  //   const token = localStorage.getItem('token');
+  //   if (favoriteMovies.some((favId) => favId === movieId)) {
+  //     console.log('Movie already added to favorites!');
+  //   } else {
+  //     if (token !== null && user !== null) {
+  //       this.props.addFavorite(movieId);
+  //       axios
+  //         .post(
+  //           `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
+  //           {},
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           }
+  //         )
+  //         .then(() => {
+  //           console.log(`Movie successfully added to favorites!`);
+  //         })
+  //         .catch((e) => {
+  //           console.error(e);
+  //         });
+  //     }
+  //   }
+  // }
   render() {
-    const { movie, onBackClick } = this.props;
+    const { movie, onBackClick, addFavorite } = this.props;
+    console.log(this.props);
 
     return (
       <div className="movie-view">
         <div className="movie-poster">
-          <img src={movie.ImagePath} />
+        <img src={movie.ImagePath} />
         </div>
 
         <div className="movie-title">
@@ -43,7 +72,7 @@ export class MovieView extends React.Component {
             variant="outline-warning"
             size="sm"
             type="button"
-            onClick={() => addFavorite(movie._id)}
+            // onClick={() => addFavorite(movie._id)}
           >
             Add to favorites
           </Button>
@@ -61,3 +90,22 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+// MovieView.propTypes = {
+//   movie: PropTypes.shape({
+//     Title: PropTypes.string.isRequired,
+//     Description: PropTypes.string.isRequired,
+//     ImagePath: PropTypes.string.isRequired,
+//     Genre: PropTypes.shape({
+//       Name: PropTypes.string.isRequired,
+//       Description: PropTypes.string.isRequired,
+//     }).isRequired,
+//     Director: PropTypes.shape({
+//       Name: PropTypes.string.isRequired,
+//       Bio: PropTypes.string.isRequired,
+//       Birth: PropTypes.string.isRequired,
+//       Death: PropTypes.string.isRequired,
+//     }).isRequired,
+//   }).isRequired,
+//   onBackClick: PropTypes.func.isRequired,
+// };
