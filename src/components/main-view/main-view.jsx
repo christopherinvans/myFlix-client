@@ -9,8 +9,6 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from "../movie-view/movie-view";
 import { Navbar } from "../navbar/navbar";
-// import { DirectorView } from "../director-view/director-view";
-// import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 
 import Container from "react-bootstrap/Container";
@@ -92,11 +90,11 @@ addFavorite=(movieId)=> {
     console.log('Movie already added to favorites!');
   } else {
     if (token !== null && user !== null) {
-      this.setState({ favoriteMovies: [...favoriteMovies, movieId] });
+      this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
       axios
         .post(
           `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-          {},
+          '',
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -104,7 +102,8 @@ addFavorite=(movieId)=> {
           }
         )
         .then(() => {
-          console.log(`Movie successfully added to favorites!`);
+          console.log(`Movie successfully added to favorites!, ${favoriteMovies}, ${typeof favoriteMovies}`);
+
         })
         .catch((e) => {
           console.error(e);
@@ -194,7 +193,7 @@ render() {
                   <ProfileView 
                   user={user} 
                   goBack={history.goBack} 
-                  favoriteMovies={favoriteMovies || []} 
+                  favoriteMovies={favoriteMovies} 
                   addFavorite={this.addFavorite} 
                   onBackClick={() => history.goBack()} 
                   movies={movies} />

@@ -4,34 +4,7 @@ import { Row, Col, Button, Image } from "react-bootstrap";
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
-  // addFavorite(movieId) {
-  //   let { user, favoriteMovies } = this.props;
-  //   console.log(this.props);
-  //   const token = localStorage.getItem('token');
-  //   if (favoriteMovies.some((favId) => favId === movieId)) {
-  //     console.log('Movie already added to favorites!');
-  //   } else {
-  //     if (token !== null && user !== null) {
-  //       this.props.addFavorite(movieId);
-  //       axios
-  //         .post(
-  //           `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-  //           {},
-  //           {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //           }
-  //         )
-  //         .then(() => {
-  //           console.log(`Movie successfully added to favorites!`);
-  //         })
-  //         .catch((e) => {
-  //           console.error(e);
-  //         });
-  //     }
-  //   }
-  // }
+ 
   render() {
     const { movie, onBackClick, addFavorite } = this.props;
     console.log(this.props);
@@ -72,7 +45,7 @@ export class MovieView extends React.Component {
             variant="outline-warning"
             size="sm"
             type="button"
-            // onClick={() => addFavorite(movie._id)}
+            onClick={() => addFavorite(movie._id)}
           >
             Add to favorites
           </Button>

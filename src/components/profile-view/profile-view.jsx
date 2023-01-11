@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { MovieCard } from '../movie-card/movie-card';
 
 // Import React Bootstrap Components
 import Form from "react-bootstrap/Form";
@@ -25,7 +25,8 @@ export function ProfileView(props) {
     const [passwordErr, setPasswordErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
     const [birthdayErr, setBirthdayErr] = useState('');
-    const { user, favoriteMovies, removeFavorite, onBackClick } = props;
+    let { user, favoriteMovies, removeFavorite, onBackClick } = props;
+    console.log(props);
 
 // Validate user inputs
 const validate = () => {
@@ -110,15 +111,15 @@ const validate = () => {
   };
   return (
     <Container className="profile-container">
-      <Card bg="dark" text="light" className="profile-card">
+      <Card bg="light" text="dark" className="profile-card">
         <Card.Header className="text-center" as="h5">
           Profile
         </Card.Header>
         <Card.Body>
           <CardGroup>
-            <Card bg="dark" border="dark" text="light">
+            <Card bg="light" border="dark" text="dark">
               <span className="label text-center headline-profile-update">
-                Update profile information
+                Update Profile Information
               </span>
               <Form>
                 <Form.Group
@@ -187,12 +188,21 @@ const validate = () => {
                 </Button>
               </Form>
               <span className="label headline-profile-mini-cards">
-                My favorite movies
+                My Favorite Movies
               </span>
+              <Row>
+                {console.log(favoriteMovies)}
+        {favoriteMovies.length > 0 &&
+          favoriteMovies.map((m) => (
+            <Col className="mb-5"  key={m._id} sm={5} md={3}>
+              <MovieCard movie={m} />
+            </Col>
+          ))}
+      </Row>
             </Card>
-            <Card bg="dark" border="dark" text="light">
+            <Card bg="light" border="dark" text="dark">
               <span className="label text-center headline-profile-delete">
-                Delete account
+                Delete Account
               </span>
               <Col>
                 <Button
@@ -205,41 +215,6 @@ const validate = () => {
                 </Button>
               </Col>
             </Card>
-          </CardGroup>
-          <CardGroup className="card-group-profile-mini-cards">
-            {favoriteMovies.map((m) => (
-              <Col
-                md={6}
-                lg={3}
-                key={m._id}
-                className="profile-movie-card-mini"
-              >
-                <Card className="h-100" bg="dark" text="light">
-                  <Link
-                    to={`/movies/${m._id}`}
-                    className="profile-movie-card-link"
-                  >
-                    <Card.Img
-                      variant="top"
-                      crossOrigin="anonymous | use-credentials"
-                      src={m.ImagePath}
-                    />
-                    <Card.Body>
-                      <Card.Title>{m.Title}</Card.Title>
-                    </Card.Body>
-                  </Link>
-                  <Button
-                    className="button-profile-view-remove-favorite"
-                    variant="outline-danger"
-                    size="sm"
-                    type="button"
-                    onClick={() => removeFavorite(m._id)}
-                  >
-                    Remove
-                  </Button>
-                </Card>
-              </Col>
-            ))}
           </CardGroup>
         </Card.Body>
         <Card.Footer className="text-right">
