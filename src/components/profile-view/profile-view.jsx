@@ -27,6 +27,7 @@ export function ProfileView(props) {
     const [birthdayErr, setBirthdayErr] = useState('');
     let { user, favoriteMovies, removeFavorite, onBackClick } = props;
     console.log(props);
+    console.log(this.state);
 
 // Validate user inputs
 const validate = () => {

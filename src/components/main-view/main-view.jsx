@@ -94,7 +94,7 @@ addFavorite=(movieId)=> {
       axios
         .post(
           `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-          '',
+          {},
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -103,7 +103,7 @@ addFavorite=(movieId)=> {
         )
         .then(() => {
           console.log(`Movie successfully added to favorites!, ${favoriteMovies}, ${typeof favoriteMovies}`);
-
+          this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
         })
         .catch((e) => {
           console.error(e);
@@ -169,18 +169,7 @@ render() {
             );
           }}
         />
-        <Route
-          path="/register"
-          render={() => {
-            // if (user) return <Redirect to="/" />;
-            ()=><RegistrationView/>
-            return (
-              <Col>
-                <RegistrationView />
-              </Col>
-            );
-          }}
-        />
+       
 
         {/* route for link on main-view to profile-view */}
 

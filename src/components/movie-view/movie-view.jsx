@@ -45,7 +45,7 @@ export class MovieView extends React.Component {
             variant="outline-warning"
             size="sm"
             type="button"
-            onClick={() => addFavorite(movie._id)}
+            onClick={() => addFavorite(movie)}
           >
             Add to favorites
           </Button>
