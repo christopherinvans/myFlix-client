@@ -16,6 +16,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import './main-view.scss';
+// import MoviesList from '../movies-list/movies-list';
 
 export class MainView extends React.Component {
 
@@ -183,7 +184,7 @@ render() {
                   user={user} 
                   goBack={history.goBack} 
                   favoriteMovies={favoriteMovies} 
-                  addFavorite={this.addFavorite} 
+                  handleFavorite={this.handleFavorite}
                   onBackClick={() => history.goBack()} 
                   movies={movies} />
                 </Col>
@@ -222,7 +223,7 @@ render() {
                 <MovieView
                   movie={movies.find((m) => m._id === match.params.movieId)}
                   onBackClick={() => history.goBack()}
-                 addFavorite={this.addFavorite}
+                  handleFavorite={this.handleFavorite}
                 />
               </Col>
             );

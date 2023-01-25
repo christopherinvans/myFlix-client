@@ -64,7 +64,7 @@ const validate = () => {
     if (isReq && token !== null && user !== null) {
       axios
         .put(
-          `https://myflix-firstmovieapp.herokuapp.com/users/${user}`,
+          `https://enigmatic-river-99618.herokuapp.com/users/${user}`,
 
           {
             Username: username,
@@ -98,7 +98,7 @@ const validate = () => {
     const token = localStorage.getItem('token');
     if (confirm('Are you sure? This cannot be undone!')) {
       axios
-        .delete(`https://myflix-firstmovieapp.herokuapp.com/users/${user}`, {
+        .delete(`https://enigmatic-river-99618.herokuapp.com/users/${user}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -237,7 +237,7 @@ const validate = () => {
 ProfileView.propTypes = {
   user: PropTypes.string.isRequired,
   favoriteMovies: PropTypes.array.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
+  // removeFavorite: PropTypes.func.isRequired,
   onBackClick: PropTypes.func.isRequired,
 };
 

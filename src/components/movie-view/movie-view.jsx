@@ -1,12 +1,36 @@
 import React from "react";
+import axios from 'axios';
 import { Row, Col, Button, Image } from "react-bootstrap";
 
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
+  handleFavoriteMovie(e) {
+    const { movie } = this.props;
+    e.preventDefault();
+    axios
+      .post(
+        `https://enigmatic-river-99618.herokuapp.com/users/${localStorage.getItem(
+          "user"
+        )}/Movies/${movie._id}`,
+        { username: localStorage.getItem("user") },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => {
+        alert(`${movie.Title} successfully added to your favorites`);
+      })
+      .then((res) => {
+        document.location.reload(true);
+      })
+      .catch((error) => {
+        alert(`${movie.Title} not added to your favorites` + error);
+      });
+  }
  
   render() {
-    const { movie, onBackClick, addFavorite } = this.props;
+    const { movie, onBackClick, handleFavoriteMovie } = this.props;
     console.log(this.props);
 
     return (
@@ -41,17 +65,16 @@ export class MovieView extends React.Component {
         </div>
 
         <Button
-            className="button-movie-view-add-favorite"
-            variant="outline-warning"
-            size="sm"
-            type="button"
-            onClick={() => addFavorite(movie)}
+            className="favorite-button mt-3 btn-md"
+            variant="outline-primary"
+            value={movie._id}
+            onClick={(e) => this.handleFavoriteMovie(e, movie)}
           >
-            Add to favorites
+            Add to Favorite Movies
           </Button>
 
         <Button
-              className="back-button mt-2"
+              className="back-button mt-3"
               variant="secondary"
               onClick={() => {
                 onBackClick();
