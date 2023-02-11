@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { Row, Col, Button, Image } from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 import './movie-view.scss';
 
@@ -36,7 +37,7 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster">
-        <img src={movie.ImagePath} />
+        <img src={movie.ImagePath}  />
         </div>
 
         <div className="movie-title">
@@ -87,21 +88,21 @@ export class MovieView extends React.Component {
   }
 }
 
-// MovieView.propTypes = {
-//   movie: PropTypes.shape({
-//     Title: PropTypes.string.isRequired,
-//     Description: PropTypes.string.isRequired,
-//     ImagePath: PropTypes.string.isRequired,
-//     Genre: PropTypes.shape({
-//       Name: PropTypes.string.isRequired,
-//       Description: PropTypes.string.isRequired,
-//     }).isRequired,
-//     Director: PropTypes.shape({
-//       Name: PropTypes.string.isRequired,
-//       Bio: PropTypes.string.isRequired,
-//       Birth: PropTypes.string.isRequired,
-//       Death: PropTypes.string.isRequired,
-//     }).isRequired,
-//   }).isRequired,
-//   onBackClick: PropTypes.func.isRequired,
-// };
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+    }).isRequired,
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      Birth: PropTypes.string.isRequired,
+      Death: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired,
+};

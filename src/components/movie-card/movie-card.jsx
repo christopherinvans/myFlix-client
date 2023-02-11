@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 import './movie-card.scss';
 
-export class MovieCard extends React.Component {
-  render() {
-    const { movie, onMovieClick } = this.props;
-
+// export class MovieCard extends React.Component {
+//   render() {
+//     const { movie, onMovieClick } = this.props;
+export const MovieCard= ({movie})=> {
     return (
       <Card>
         <Card.Img variant="top" src={movie.ImagePath} />
@@ -23,14 +23,14 @@ export class MovieCard extends React.Component {
       </Card>
     );
   }
-}
+
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     // shape({..}) means that its an object
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
+    // ImagePath: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }),
