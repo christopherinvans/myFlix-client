@@ -83,57 +83,6 @@ toRegister(registered) {
   });
 }
 
-
-addFavorite=(movieId)=> {
-  let { user, favoriteMovies } = this.state;
-  const token = localStorage.getItem('token');
-  if (favoriteMovies.some((favId) => favId === movieId)) {
-    console.log('Movie already added to favorites!');
-  } else {
-    if (token !== null && user !== null) {
-      this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
-      axios
-        .post(
-          `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          console.log(`Movie successfully added to favorites!, ${favoriteMovies}, ${typeof favoriteMovies}`);
-          this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
-  }
-}
-
-removeFavorite(movieId) {
-  let { user } = this.props;
-  const token = localStorage.getItem('token');
-  if (token !== null && user !== null) {
-    this.props.removeFavorite(movieId);
-    axios
-      .delete(
-        `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then(() => {
-        console.log(`Movie successfully removed from favorites!`);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-}
-
 render() {
   const { movies, user, favoriteMovies, selectedMovie } = this.state;
   return (
@@ -223,7 +172,7 @@ render() {
                 <MovieView
                   movie={movies.find((m) => m._id === match.params.movieId)}
                   onBackClick={() => history.goBack()}
-                  handleFavorite={this.handleFavorite}
+                  addFavorite={this.addFavorite}
                 />
               </Col>
             );
