@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import './movie-card.scss';
 
-// export class MovieCard extends React.Component {
-//   render() {
-//     const { movie, onMovieClick } = this.props;
 export const MovieCard= ({movie,updateFavoriteMovies})=> {
 
   let username=localStorage.getItem("user");
@@ -42,17 +39,20 @@ axios.delete(`https://enigmatic-river-99618.herokuapp.com/users/${username}/movi
 .catch(e=>console.error(e))
   }
     return (
-      <Card style={{height:'100%'}} className="mt-2 mb-2">
+      <Card style={{height:'100%', padding:'10px'}} className="mt-2 mb-1">
         <Card.Img className="card-image" variant="top" src={movie.ImagePath} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
+          </Card.Body>
+          <Card.Footer>
           <Link to={`/movies/${movie._id}`}>
             <Button variant="link">Open</Button>
           </Link>
           {!fav&&<Button onClick={addFavoriteMovieHandler}>Add to Favorites</Button>}
           {fav&&<Button onClick={deleteFavoriteMovieHandler}>Remove from Favorites</Button>}
-        </Card.Body>
+          </Card.Footer>
+        
       </Card>
     );
   }

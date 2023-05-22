@@ -1,71 +1,87 @@
 import { useParams } from 'react-router';
 // import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React, {useState} from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 // import { FavoriteIcon } from '../favorite-icon/favorite-icon';
 import { MovieCard } from '../movie-card/movie-card';
+import axios from 'axios';
 
 // MovieView receives property from the MainView - movies
 export const MovieView = ({movie}) => {
-  // const movies = useSelector((state) => state.movies.movies);
-  
+    
+  let username=localStorage.getItem("user");
+  let token=localStorage.getItem("token");
+let favoriteMovies=localStorage.getItem("favoriteMovies")
+let isFavorite=favoriteMovies&&favoriteMovies.split(",").includes(movie._id)?true:false;
+console.log(movie.Title,isFavorite)
+const [fav, setFav]=useState(isFavorite)
+  function addFavoriteMovieHandler(){
+   
+axios.post(`https://enigmatic-river-99618.herokuapp.com/users/${username}/movies/${movie._id}`,{},{
+  headers: { Authorization: `Bearer ${token}` },
+})
+.then(response=>{
+  setFav(true)
+  localStorage.setItem("favoriteMovies", response.data.FavoriteMovies)
+  updateFavoriteMovies(response.data.FavoriteMovies)
+  console.log(response)})
+.catch(e=>console.error(e))
+  }
 
-  // const { movieId } = useParams();
-  // const movie = movies.find((m) => m.id === movieId);
+  function deleteFavoriteMovieHandler(){
+axios.delete(`https://enigmatic-river-99618.herokuapp.com/users/${username}/movies/${movie._id}`,{
+  headers: { Authorization: `Bearer ${token}` },
+})
+.then(response=>{
+  setFav(false)
+  localStorage.setItem("favoriteMovies", response.data.FavoriteMovies)
+  updateFavoriteMovies(response.data.FavoriteMovies)
+  console.log(response)})
+.catch(e=>console.error(e))
+  }
 
-  // // let similarMovies = movies.filter((filteredMovie) => {
-  //   return (
-  //     filteredMovie.genre.name === movie.genre.name &&
-  //     filteredMovie.title !== movie.title
-  //   );
-  // });
 console.log(movie)
   return (
     <>
-      {/* {movies.length === 0 ? ( */}
-        {/* <Col>The list is empty</Col>
-      ) : ( */}
         <>
-          <Row className='d-flex flex-row-reverse p-3'>
-            <Col md={5} className='text-center text-md-end'>
+          <Row>
+            <Col>
               <img
                 src={movie.ImagePath}
                 alt={`Poster for ${movie.Title}`}
                 className='img-fluid h-100 w-auto movie-view-img'
               />
             </Col>
-            <Col md={7} className='d-flex flex-column'>
+            <Col className='d-flex flex-column'>
               <Row className='d-flex flex-row  justify-content-between'>
-                <Col md={9} className='d-flex flex-column'>
-                  <h3 className='my-0'>
+                <Col md={12} className='d-flex flex-column'>
+                  <h3 className='text-left'>
                     <span>Title: </span>
                     <span>{movie.Title}</span>
                   </h3>
-                  <h5 className='mt-1 text-left text-muted'>
+                  <h5 className='mt-3 text-left text-muted'>
                     <span>Director: </span>
                     <span>{movie.Director.Name}</span>
                   </h5>
-                </Col>
-
-                <Col md={3} className='align-self-end mb-2 text-end'>
+                  <div className='text-left mt-2'>
                   <span>Genre: </span>
                   <span className='fw-bolder'>{movie.Genre.Name}</span>
+                  </div>
                 </Col>
               </Row>
-              <div className='mt-md-5 mb-4'>
+              <div className='mt-3 md-5 mb-4 text-left'>
                 <div className='text-decoration-underline mb-2'>
                   Description:{' '}
                 </div>
                 <span>{movie.Description}</span>
               </div>
               <Row className='d-flex flex-row justify-content-between mt-auto mb-md-4'>
-                <Col className='text-start'>
-                  {/* <FavoriteIcon
-                    movie={movie}
-                  /> */}
+                <Col>
+                {!fav&&<Button size='lg' onClick={addFavoriteMovieHandler}>Add to Favorites</Button>}
+          {fav&&<Button onClick={deleteFavoriteMovieHandler}>Remove from Favorites</Button>}
                 </Col>
-                <Col className='text-end'>
+                <Col className=''>
                   <Link to={`/`}>
                     <Button variant='secondary' size='lg'>
                       Back
@@ -75,19 +91,8 @@ console.log(movie)
               </Row>
             </Col>
           </Row>
-          {/* <Row>
-            <h2 className='mt-0'>Similar movies</h2>
-            <hr /> */}
-            {/* {similarMovies.map((movie) => (
-              <Col className='mb-5' key={movie.id} xs={12} sm={6} md={4} lg={3}>
-                <MovieCard
-                  movieData={movie}
-                />
-              </Col>
-            ))}
-          </Row> */}
+         
         </>
-      {/* )} */}
     </>
   );
 };
