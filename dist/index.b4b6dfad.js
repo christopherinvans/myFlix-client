@@ -47998,6 +47998,7 @@ function Navbar({ user  }) {
                         className: "ml-auto",
                         children: [
                             isAuth() && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Nav).Link, {
+                                className: "mt-2",
                                 href: `/users/${user}`,
                                 children: user
                             }, void 0, false, {
@@ -48006,6 +48007,7 @@ function Navbar({ user  }) {
                                 columnNumber: 26
                             }, this),
                             isAuth() && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                                className: "mt-2",
                                 variant: "link",
                                 onClick: onLoggedOut,
                                 children: "Logout"
