@@ -16,6 +16,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import './main-view.scss';
+// import MoviesList from '../movies-list/movies-list';
 
 export class MainView extends React.Component {
 
@@ -30,6 +31,9 @@ export class MainView extends React.Component {
     };
   }
   componentDidMount() {
+   
+    let favoriteMovies=localStorage.getItem("favoriteMovies").split(",")
+    this.setState({favoriteMovies})
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
       this.setState({
@@ -38,6 +42,7 @@ export class MainView extends React.Component {
       this.getMovies(accessToken);
     }
   }
+  updateFavoriteMovies=(favoriteMovies)=>{this.setState({favoriteMovies})}
 
   getMovies(token) {
     axios
@@ -82,57 +87,6 @@ toRegister(registered) {
   });
 }
 
-
-addFavorite=(movieId)=> {
-  let { user, favoriteMovies } = this.state;
-  const token = localStorage.getItem('token');
-  if (favoriteMovies.some((favId) => favId === movieId)) {
-    console.log('Movie already added to favorites!');
-  } else {
-    if (token !== null && user !== null) {
-      this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
-      axios
-        .post(
-          `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          console.log(`Movie successfully added to favorites!, ${favoriteMovies}, ${typeof favoriteMovies}`);
-          this.setState({favoriteMovies: this.state.favoriteMovies.concat([movieId])})
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
-  }
-}
-
-removeFavorite(movieId) {
-  let { user } = this.props;
-  const token = localStorage.getItem('token');
-  if (token !== null && user !== null) {
-    this.props.removeFavorite(movieId);
-    axios
-      .delete(
-        `https://enigmatic-river-99618.herokuapp.com/users/${user}/movies/${movieId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then(() => {
-        console.log(`Movie successfully removed from favorites!`);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-}
-
 render() {
   const { movies, user, favoriteMovies, selectedMovie } = this.state;
   return (
@@ -153,7 +107,7 @@ render() {
             if (movies.length === 0) return <div className="main-view" />;
             return movies.map((m) => (
               <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
+                <MovieCard updateFavoriteMovies={this.updateFavoriteMovies}movie={m} />
               </Col>
             ));
           }}
@@ -183,9 +137,10 @@ render() {
                   user={user} 
                   goBack={history.goBack} 
                   favoriteMovies={favoriteMovies} 
-                  addFavorite={this.addFavorite} 
+                  handleFavorite={this.handleFavorite}
                   onBackClick={() => history.goBack()} 
-                  movies={movies} />
+                  movies={movies} 
+                  updateFavoriteMovies={this.updateFavoriteMovies}/>
                 </Col>
               );
             }}
@@ -222,7 +177,7 @@ render() {
                 <MovieView
                   movie={movies.find((m) => m._id === match.params.movieId)}
                   onBackClick={() => history.goBack()}
-                 addFavorite={this.addFavorite}
+                  addFavorite={this.addFavorite}
                 />
               </Col>
             );

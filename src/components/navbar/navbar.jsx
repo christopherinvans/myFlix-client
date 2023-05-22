@@ -22,25 +22,25 @@ export function Navbar({ user }) {
     <Navbar
       className="main-nav"
       sticky="top"
-    //   bg="dark"
+      bg="dark"
       expand="lg"
-    //   variant="dark"
+      variant="dark"
     >
       <Container>
         <Navbar.Brand className="navbar-logo" href="/">
-          MyFlix
+          myFlix React
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
-            {isAuth() && <Nav.Link href={`/users/${user}`}>{user}</Nav.Link>}
+            {isAuth() && <Nav.Link className="mt-2" href={`/users/${user}`}>{user}</Nav.Link>}
             {isAuth() && (
-              <Button variant="link" onClick={onLoggedOut}>
+              <Button className="mt-2" variant="link" onClick={onLoggedOut}>
                 Logout
               </Button>
             )}
-            {!isAuth() && <Nav.Link href="/">Sign-in</Nav.Link>}
-            {!isAuth() && <Nav.Link href="/register">Sign-up</Nav.Link>}
+            {!isAuth() && <Nav.Link className="text-white" href="/">Sign-in</Nav.Link>}
+            {!isAuth() && <Nav.Link className="text-white" href="/register">Sign-up</Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

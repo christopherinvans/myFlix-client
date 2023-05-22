@@ -25,7 +25,7 @@ export function ProfileView(props) {
     const [passwordErr, setPasswordErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
     const [birthdayErr, setBirthdayErr] = useState('');
-    let { user, favoriteMovies, removeFavorite, onBackClick } = props;
+    let { user, movies, favoriteMovies, onBackClick } = props;
     console.log(props);
     console.log(this.state);
 
@@ -64,7 +64,7 @@ const validate = () => {
     if (isReq && token !== null && user !== null) {
       axios
         .put(
-          `https://myflix-firstmovieapp.herokuapp.com/users/${user}`,
+          `https://enigmatic-river-99618.herokuapp.com/users/${user}`,
 
           {
             Username: username,
@@ -98,7 +98,7 @@ const validate = () => {
     const token = localStorage.getItem('token');
     if (confirm('Are you sure? This cannot be undone!')) {
       axios
-        .delete(`https://myflix-firstmovieapp.herokuapp.com/users/${user}`, {
+        .delete(`https://enigmatic-river-99618.herokuapp.com/users/${user}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
@@ -194,9 +194,9 @@ const validate = () => {
               <Row>
                 {console.log(favoriteMovies)}
         {favoriteMovies.length > 0 &&
-          favoriteMovies.map((m) => (
-            <Col className="mb-5"  key={m._id} sm={5} md={3}>
-              <MovieCard movie={m} />
+          movies.filter(m=>favoriteMovies.includes(m._id)).map((m) => (
+            <Col className="mb-5 mt-2"  key={m._id} sm={12} md={12} lg={6}>
+              <MovieCard updateFavoriteMovies={props.updateFavoriteMovies}movie={m} />
             </Col>
           ))}
       </Row>
@@ -237,7 +237,7 @@ const validate = () => {
 ProfileView.propTypes = {
   user: PropTypes.string.isRequired,
   favoriteMovies: PropTypes.array.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
+  // removeFavorite: PropTypes.func.isRequired,
   onBackClick: PropTypes.func.isRequired,
 };
 

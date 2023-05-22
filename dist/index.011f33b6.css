@@ -1,9 +1,45 @@
 
 
+.movie-card {
+  margin: 20px;
+  background-color: white;
+}
+.movie-view {
+  background-color: white;
+  border: 2px solid black;
+  margin-right: 25%;
+  margin-left: 25%;
+  padding: 20px 12px;
+  margin-top: 10%;
+  width: 50%;
+  text-align: center;
+}
 
+.label {
+  font-weight: bold;
+}
 
+.btn {
+  margin: 10px;
+}
 
+.main-view {
+  width: 100%;
+  background-color: white;
+  margin-right: 25%;
+  margin-left: 25%;
+  padding: 20px 12px;
+  margin-top: 10%;
+  text-align: center;
+}
 
+.label {
+  font-weight: bold;
+}
+
+.btn {
+  margin: 10px;
+}
 .my-flix {
   color: steelblue;
 }
