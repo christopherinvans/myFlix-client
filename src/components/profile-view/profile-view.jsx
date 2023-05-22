@@ -25,7 +25,7 @@ export function ProfileView(props) {
     const [passwordErr, setPasswordErr] = useState('');
     const [emailErr, setEmailErr] = useState('');
     const [birthdayErr, setBirthdayErr] = useState('');
-    let { user, favoriteMovies, removeFavorite, onBackClick } = props;
+    let { user, movies, favoriteMovies, onBackClick } = props;
     console.log(props);
     console.log(this.state);
 
@@ -194,9 +194,9 @@ const validate = () => {
               <Row>
                 {console.log(favoriteMovies)}
         {favoriteMovies.length > 0 &&
-          favoriteMovies.map((m) => (
+          movies.filter(m=>favoriteMovies.includes(m._id)).map((m) => (
             <Col className="mb-5"  key={m._id} sm={5} md={3}>
-              <MovieCard movie={m} />
+              <MovieCard updateFavoriteMovies={props.updateFavoriteMovies}movie={m} />
             </Col>
           ))}
       </Row>

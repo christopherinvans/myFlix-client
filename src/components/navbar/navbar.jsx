@@ -28,7 +28,7 @@ export function Navbar({ user }) {
     >
       <Container>
         <Navbar.Brand className="navbar-logo" href="/">
-          MyFlix
+          myFlix React
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

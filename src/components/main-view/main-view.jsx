@@ -31,6 +31,9 @@ export class MainView extends React.Component {
     };
   }
   componentDidMount() {
+   
+    let favoriteMovies=localStorage.getItem("favoriteMovies").split(",")
+    this.setState({favoriteMovies})
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
       this.setState({
@@ -39,6 +42,7 @@ export class MainView extends React.Component {
       this.getMovies(accessToken);
     }
   }
+  updateFavoriteMovies=(favoriteMovies)=>{this.setState({favoriteMovies})}
 
   getMovies(token) {
     axios
@@ -103,7 +107,7 @@ render() {
             if (movies.length === 0) return <div className="main-view" />;
             return movies.map((m) => (
               <Col md={3} key={m._id}>
-                <MovieCard movie={m} />
+                <MovieCard updateFavoriteMovies={this.updateFavoriteMovies}movie={m} />
               </Col>
             ));
           }}
@@ -135,7 +139,8 @@ render() {
                   favoriteMovies={favoriteMovies} 
                   handleFavorite={this.handleFavorite}
                   onBackClick={() => history.goBack()} 
-                  movies={movies} />
+                  movies={movies} 
+                  updateFavoriteMovies={this.updateFavoriteMovies}/>
                 </Col>
               );
             }}
