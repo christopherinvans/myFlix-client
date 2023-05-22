@@ -195,7 +195,7 @@ const validate = () => {
                 {console.log(favoriteMovies)}
         {favoriteMovies.length > 0 &&
           movies.filter(m=>favoriteMovies.includes(m._id)).map((m) => (
-            <Col className="mb-5"  key={m._id} sm={5} md={3}>
+            <Col className="mb-5 mt-2"  key={m._id} sm={12} md={12} lg={6}>
               <MovieCard updateFavoriteMovies={props.updateFavoriteMovies}movie={m} />
             </Col>
           ))}

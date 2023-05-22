@@ -47617,8 +47617,13 @@ const MovieCard = ({ movie , updateFavoriteMovies  })=>{
         }).catch((e)=>console.error(e));
     }
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default), {
+        style: {
+            height: "100%"
+        },
+        className: "mt-2 mb-2",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _cardDefault.default).Img, {
+                className: "card-image",
                 variant: "top",
                 src: movie.ImagePath
             }, void 0, false, {
@@ -48380,9 +48385,10 @@ function ProfileView(props) {
                                         children: [
                                             console.log(favoriteMovies),
                                             favoriteMovies.length > 0 && movies.filter((m)=>favoriteMovies.includes(m._id)).map((m)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
-                                                    className: "mb-5",
-                                                    sm: 5,
-                                                    md: 3,
+                                                    className: "mb-5 mt-2",
+                                                    sm: 12,
+                                                    md: 12,
+                                                    lg: 6,
                                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                                                         updateFavoriteMovies: props.updateFavoriteMovies,
                                                         movie: m
