@@ -8,7 +8,7 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from "../movie-view/movie-view";
-import { Navbar } from "react-bootstrap";
+import { NavigationBar } from "../navbar/navbar";
 import { ProfileView } from "../profile-view/profile-view";
 
 import Container from "react-bootstrap/Container";
@@ -92,7 +92,7 @@ render() {
   return (
     <BrowserRouter>
     {/* <Routes> */}
-      <Navbar user={user} />
+      <NavigationBar user={user} />
       <Row className="main-view justify-content-md-center mt-3">
         <Route
           exact
