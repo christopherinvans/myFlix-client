@@ -31,8 +31,7 @@ export class MainView extends React.Component {
     };
   }
   componentDidMount() {
-   
-    let favoriteMovies=localStorage.getItem("favoriteMovies").split(",")
+    let favoriteMovies=localStorage.getItem("favoriteMovies") ? localStorage.getItem("favoriteMovies").split(",") : [];
     this.setState({favoriteMovies})
     let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
